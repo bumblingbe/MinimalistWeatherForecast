@@ -1,5 +1,5 @@
 body {
-  margin: 50px 15%;
+  margin: 50px auto;
   padding: 5%;
   border: 1px solid;
   text-align: left;
@@ -11,6 +11,7 @@ body {
   font-weight: 400;
   font-style: normal;
   font-size: 16px;
+  display: block;
 }
 
 input {
@@ -82,8 +83,6 @@ a:hover {
 #city-search-bar:focus-visible {
   outline: -webkit-focus-ring-color auto 1px;
   outline-color: red;
-  outline-style: ;
-  outline-width: ;
 }
 
 #flex-box-element {
