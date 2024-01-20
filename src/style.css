@@ -88,6 +88,7 @@ a:hover {
 
 #flex-box-element {
   display: flex;
+  flex-wrap: wrap;
   justify-content: flex-start;
   flex-direction: row;
   align-items: center;
