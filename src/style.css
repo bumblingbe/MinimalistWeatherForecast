@@ -51,6 +51,10 @@ a:visited {
   color: rgb(100, 100, 100);
 }
 
+a:hover {
+  color: red;
+}
+
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   position: relative;
@@ -66,12 +70,20 @@ a:visited {
 }
 
 #city-search-submit-button:hover {
-  background-color: #f0f0f0;
+  color: red;
+  border-color: red;
   transition: 100ms;
 }
 
 #city-search-bar {
   width: 70%;
+}
+
+#city-search-bar:focus-visible {
+  outline: -webkit-focus-ring-color auto 1px;
+  outline-color: red;
+  outline-style: ;
+  outline-width: ;
 }
 
 #flex-box-element {
