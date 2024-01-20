@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Kalam:wght@300;400;700&family=Permanent+Marker&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>MinimalistWeatherApp</title>
+  </head>
+  <body>
+    <form action="" id="city-search-form">
+      <input
+        type="search"
+        id="city-search-bar"
+        placeholder="Enter city to search..."
+      /><input type="submit" />
+    </form>
+    <h1 id="city-name">City</h1>
+    <div id="flex-box-element">
+      <div id="temp-info">
+        <span id="temp-icon">ICON</span> <span id="temp-value">19</span>°C
+      </div>
+      <div id="weather-description">weather description</div>
+    </div>
+    <div class="sub-para" id="day-and-time">
+      <span id="day-of-week">day</span>, <span id="time-of-day">time</span>
+    </div>
+    <div class="sub-para" id="wind-and-humidity-info">
+      Humidity: <strong id="humidity-value">87</strong>%, Wind:
+      <strong id="windspeed-value">7.2</strong>km/h
+    </div>
+    <footer>
+      This project was coded by <a href="">Bethia</a> and is
+      <a href="">on GitHub</a> and hosted <a href="">on Netlify</a>
+    </footer>
+  </body>
+  <script src="src/script.js"></script>
+</html>

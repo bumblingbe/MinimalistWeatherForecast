@@ -1,0 +1,31 @@
+body {
+  margin: 50px 15%;
+  padding: 5%;
+  border: 1px solid;
+  text-align: left;
+  border-radius: 30px;
+  width: 50vw;
+  font-family: "Kalam", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+}
+
+#city-search-form {
+  font-family: "Permanent Marker", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1 {
+  font-family: "Permanent Marker", cursive;
+  font-weight: 400;
+  font-style: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+
+strong {
+  color: rgb(143, 142, 142);
+}
