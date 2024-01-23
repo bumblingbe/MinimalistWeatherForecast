@@ -11,6 +11,7 @@ function handleSearch(event) {
 }
 
 function askWhichUnits() {
+  //NEED TO WORK OUT HOW TO MAKE THIS CONDITIONAL LOOP WORK???
   let units = prompt("Units: metric or imperial?");
   units = units.trim().toLowerCase();
   if (units != "metric" && units != "imperial") {
