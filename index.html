@@ -19,28 +19,86 @@
     <title>MinimalistWeatherApp</title>
   </head>
   <body>
-    <form action="" id="city-search-form">
-      <input
-        type="search"
-        id="city-search-bar"
-        placeholder="Enter city to search..."
-      /><input type="submit" id="city-search-submit-button" />
-    </form>
-    <h1 id="city-name">City</h1>
-    <div id="flex-box-element">
-      <div id="temp-info">
-        <span class="material-symbols-outlined" id="temp-icon">sunny</span>
-        <span id="temp-value">19</span>°C
-      </div>
-      <div id="weather-description">weather description</div>
-    </div>
-    <div class="sub-para" id="day-and-time">
-      <span id="day-of-week">day</span>, <span id="time-of-day">time</span>
-    </div>
-    <div class="sub-para" id="wind-and-humidity-info">
-      Humidity: <strong id="humidity-value">87</strong>%, Wind:
-      <strong id="windspeed-value">7.2</strong>km/h
-    </div>
+    <header>
+      <form id="city-search-form">
+        <input
+          type="search"
+          id="city-search-bar"
+          placeholder="Enter city to search..."
+          required
+        />
+        <input type="submit" id="city-search-submit-button" />
+      </form>
+    </header>
+    <main>
+      <h1 id="city-name">City</h1>
+      <section id="today-forecast-section">
+        <div id="today-flex-box-element">
+          <div id="temp-info">
+            <span class="material-symbols-outlined" id="temp-icon">sunny</span>
+            <span id="temp-value">19</span><span id="temp-unit">°C</span>
+          </div>
+          <div id="weather-description">weather description</div>
+        </div>
+        <div class="sub-para" id="day-and-time">
+          <span id="day-of-week">day</span>, <span id="time-of-day">time</span>
+        </div>
+        <div class="sub-para" id="wind-and-humidity-info">
+          Humidity: <strong id="humidity-value">87</strong>%, Wind:
+          <strong id="windspeed-value">7.2</strong>km/h
+        </div>
+      </section>
+      <section id="week-forecast-section">
+        <div id="1-day-away">
+          <strong>DayName</strong><br /><span class="material-symbols-outlined"
+            >sunny</span
+          >
+          <span class="week-forecast-temp"
+            >19<span class="week-forecast-temp-unit">°C</span></span
+          ><br />description
+        </div>
+        <div id="2-days-away">
+          <strong>DayName</strong><br /><span class="material-symbols-outlined"
+            >sunny</span
+          >
+          <span class="week-forecast-temp"
+            >19<span class="week-forecast-temp-unit">°C</span></span
+          ><br />description
+        </div>
+        <div id="3-days-away">
+          <strong>DayName</strong><br /><span class="material-symbols-outlined"
+            >sunny</span
+          >
+          <span class="week-forecast-temp"
+            >19<span class="week-forecast-temp-unit">°C</span></span
+          ><br />description
+        </div>
+        <div id="4-days-away">
+          <strong>DayName</strong><br /><span class="material-symbols-outlined"
+            >sunny</span
+          >
+          <span class="week-forecast-temp"
+            >19<span class="week-forecast-temp-unit">°C</span></span
+          ><br />description
+        </div>
+        <div id="5-days-away">
+          <strong>DayName</strong><br /><span class="material-symbols-outlined"
+            >sunny</span
+          >
+          <span class="week-forecast-temp"
+            >19<span class="week-forecast-temp-unit">°C</span></span
+          ><br />description
+        </div>
+        <div id="6-days-away">
+          <strong>DayName</strong><br /><span class="material-symbols-outlined"
+            >sunny</span
+          >
+          <span class="week-forecast-temp"
+            >19<span class="week-forecast-temp-unit">°C</span></span
+          ><br />description
+        </div>
+      </section>
+    </main>
     <footer>
       This project was coded by
       <a href="https://github.com/bumblingbe" target="_blank">Bethia</a> and is

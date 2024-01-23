@@ -37,15 +37,21 @@ h1 {
   margin: 20px 0 20px 0;
 }
 
-strong {
+.sub-para strong {
   color: rgb(180, 180, 180);
 }
 
+header {
+  border-bottom: 1px solid rgb(240, 240, 240);
+  padding-bottom: 30px;
+}
+
 footer {
-  border-top: 1px solid rgb(200, 200, 200);
+  border-top: 1px solid rgb(240, 240, 240);
   padding: 30px 0 0 0;
   margin: 30px 0 0 0;
   font-size: 10px;
+  text-align: center;
 }
 
 a,
@@ -57,10 +63,27 @@ a:hover {
   color: red;
 }
 
-.material-symbols-outlined {
+#today-forecast-section .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
   position: relative;
   top: -3px;
+}
+
+.week-forecast-temp {
+  font-size: 16px;
+}
+
+#week-forecast-section .material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-size: 13px;
+  position: relative;
+  top: 1px;
+}
+
+.week-forecast-temp-unit {
+  font-size: 8px;
+  position: relative;
+  top: -5px;
 }
 
 #city-search-submit-button {
@@ -86,7 +109,7 @@ a:hover {
   outline-color: red;
 }
 
-#flex-box-element {
+#today-flex-box-element {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -97,5 +120,30 @@ a:hover {
 
 #temp-info {
   font-size: 40px;
+  padding: 2vw;
+}
+
+#temp-unit {
+  font-size: 20px;
+  position: relative;
+  top: -15px;
+}
+
+#week-forecast-section {
+  color: rgb(100, 100, 100);
+  font-size: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vw;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  border-top: 1px solid rgb(248, 248, 248);
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+#weather-description {
+  border-left: 1px solid rgb(240, 240, 240);
   padding: 2vw;
 }
