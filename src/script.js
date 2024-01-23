@@ -47,38 +47,53 @@ function updateCityName(response) {
 }
 
 function updateTodayWeather(response) {
-  //update temperature icon
-  let tempIconElement = document.querySelector("#temp-icon-img");
-  let tempIconUrl = response.data.condition.icon_url;
-  let tempIconAlt = response.data.condition.icon;
-  tempIconElement.src = tempIconUrl;
-  tempIconElement.alt = tempIconAlt;
+  //update weather icon for today
+  function updateTodayWeatherIcon(response) {
+    let tempIconElement = document.querySelector("#temp-icon-img");
+    let tempIconUrl = response.data.condition.icon_url;
+    let tempIconAlt = response.data.condition.icon;
+    tempIconElement.src = tempIconUrl;
+    tempIconElement.alt = tempIconAlt;
+  }
 
-  //update temperature
-  let tempValueElement = document.querySelector("#temp-value");
-  let tempValue = Math.round(response.data.temperature.current);
-  tempValueElement.innerHTML = tempValue;
+  // update temperature for today
+  function updateTodayTemp(response) {
+    let tempValueElement = document.querySelector("#temp-value");
+    let tempValue = Math.round(response.data.temperature.current);
+    tempValueElement.innerHTML = tempValue;
+  }
 
-  //update weather description
-  let weatherConditionDescriptionElement = document.querySelector(
-    "#weather-description"
-  );
-  let weatherConditionDescription = response.data.condition.description;
-  weatherConditionDescriptionElement.innerHTML = weatherConditionDescription;
+  // update weather description for today
+  function updateTodayWeatherDescription(response) {
+    let weatherConditionDescriptionElement = document.querySelector(
+      "#weather-description"
+    );
+    let weatherConditionDescription = response.data.condition.description;
+    weatherConditionDescriptionElement.innerHTML = weatherConditionDescription;
+  }
 
-  //update humidity
-  let humidityValueElement = document.querySelector("#humidity-value");
-  let humidityValue = Math.round(response.data.temperature.humidity);
-  humidityValueElement.innerHTML = humidityValue;
+  // update humidity for today
+  function updateTodayHumidity(response) {
+    let humidityValueElement = document.querySelector("#humidity-value");
+    let humidityValue = Math.round(response.data.temperature.humidity);
+    humidityValueElement.innerHTML = humidityValue;
+  }
 
-  //update wind speed
-  let windSpeedElement = document.querySelector("#windspeed-value");
-  let windSpeed = response.data.wind.speed;
-  windSpeedElement.innerHTML = windSpeed;
+  // update wind speed for today
+  function updateTodayWindSpeed(response) {
+    let windSpeedElement = document.querySelector("#windspeed-value");
+    let windSpeed = response.data.wind.speed;
+    windSpeedElement.innerHTML = windSpeed;
+  }
+
+  updateTodayWeatherIcon(response);
+  updateTodayTemp(response);
+  updateTodayWeatherDescription(response);
+  updateTodayHumidity(response);
+  updateTodayWindSpeed(response);
 }
 
 function updateData(response) {
-  console.log(response.data);
   updateCityName(response);
   updateTodayWeather(response);
 }
