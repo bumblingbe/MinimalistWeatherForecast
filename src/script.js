@@ -15,6 +15,28 @@ function askWhichUnits() {
     alert(`Please enter either 'metric' or 'imperial'.`);
     askWhichUnits();
   } else {
+    let windspeedUnitElement = document.querySelector("#windspeed-unit");
+    let tempUnitElement = document.querySelector("#temp-unit");
+    let tempUnitWeeklyElement = document.getElementsByClassName(".tempUnit");
+    if (units == "metric") {
+      let windspeedUnit = "km";
+      windspeedUnitElement.innerHTML = windspeedUnit;
+
+      let tempUnit = "°C";
+      tempUnitElement.innerHTML = tempUnit;
+    } else if (units == "imperial") {
+      let windspeedUnit = "mi";
+      windspeedUnitElement.innerHTML = windspeedUnit;
+
+      let tempUnit = "°F";
+      tempUnitElement.innerHTML = tempUnit;
+    } else {
+      let windspeedUnit = "CHECK";
+      windspeedUnitElement.innerHTML = windspeedUnit;
+
+      let tempUnit = "CHECK";
+      tempUnitElement.innerHTML = tempUnit;
+    }
     return units;
   }
 }
@@ -33,7 +55,7 @@ function updateTodayWeather(response) {
 
   //update temperature
   let tempValueElement = document.querySelector("#temp-value");
-  let tempValue = response.data.temperature.current;
+  let tempValue = Math.round(response.data.temperature.current);
   tempValueElement.innerHTML = tempValue;
 
   //update weather description
@@ -45,7 +67,7 @@ function updateTodayWeather(response) {
 
   //update humidity
   let humidityValueElement = document.querySelector("#humidity-value");
-  let humidityValue = response.data.temperature.humidity;
+  let humidityValue = Math.round(response.data.temperature.humidity);
   humidityValueElement.innerHTML = humidityValue;
 
   //update wind speed
