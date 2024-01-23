@@ -1,11 +1,13 @@
-function replaceOldDataWithSearchedForData(event) {
+function handleSearch(event) {
   event.preventDefault();
-  let input = document.querySelector("#city-search-bar");
-  inputValue = input.value;
-  inputValueTrimmed = inputValue.trim();
+  let apiKey = "0bbe201oc9fead40c3t0cc4e349c3f4c";
+  let citySearched = document.querySelector("#city-search-bar");
+  let citySearchedValue = citySearched.value;
+  let citySearchedLowerTrimmed = citySearchedValue.trim().toLowerCase();
+  let units = askWhichUnits();
 
-  let cityNameElement = document.querySelector("#city-name");
-  cityNameElement.innerHTML = inputValueTrimmed;
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${citySearchedLowerTrimmed}&key=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(updateData);
 }
 
 function askWhichUnits() {
@@ -38,6 +40,11 @@ function askWhichUnits() {
     }
     return units;
   }
+}
+
+function updateData(response) {
+  updateCityName(response);
+  updateTodayWeather(response);
 }
 
 function updateCityName(response) {
@@ -93,23 +100,5 @@ function updateTodayWeather(response) {
   updateTodayWindSpeed(response);
 }
 
-function updateData(response) {
-  updateCityName(response);
-  updateTodayWeather(response);
-}
-
-function searchForCity(event) {
-  event.preventDefault();
-  let apiKey = "0bbe201oc9fead40c3t0cc4e349c3f4c";
-  let citySearched = document.querySelector("#city-search-bar");
-  let citySearchedValue = citySearched.value;
-  let citySearchedLowerTrimmed = citySearchedValue.trim().toLowerCase();
-  let units = askWhichUnits();
-
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${citySearchedLowerTrimmed}&key=${apiKey}&units=${units}`;
-  axios.get(apiUrl).then(updateData);
-}
-
 let submitButton = document.querySelector("#city-search-form");
-submitButton.addEventListener("submit", replaceOldDataWithSearchedForData);
-submitButton.addEventListener("submit", searchForCity);
+submitButton.addEventListener("submit", handleSearch);
