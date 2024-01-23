@@ -13,6 +13,7 @@ body {
   font-style: normal;
   font-size: 16px;
   display: block;
+  line-height: 1.5;
 }
 
 input {
@@ -124,7 +125,11 @@ a:hover {
 
 #temp-info {
   font-size: 40px;
-  padding: 2vw;
+  padding: 2vw 2vw 2vw 0;
+}
+
+#temp-icon {
+  padding: 2vw 1vw 2vw 0;
 }
 
 #temp-unit {
@@ -150,4 +155,11 @@ a:hover {
 #weather-description {
   border-left: 1px solid rgb(240, 240, 240);
   padding: 2vw;
+  font-size: 28px;
+}
+
+#temp-icon-img {
+  width: 70px;
+  position: relative;
+  top: 0px;
 }

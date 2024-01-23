@@ -17,7 +17,6 @@ function askWhichUnits() {
   } else {
     let windspeedUnitElement = document.querySelector("#windspeed-unit");
     let tempUnitElement = document.querySelector("#temp-unit");
-    let tempUnitWeeklyElement = document.getElementsByClassName(".tempUnit");
     if (units == "metric") {
       let windspeedUnit = "km";
       windspeedUnitElement.innerHTML = windspeedUnit;
@@ -49,9 +48,11 @@ function updateCityName(response) {
 
 function updateTodayWeather(response) {
   //update temperature icon
-  let tempIconElement = document.querySelector("#temp-icon");
-  let tempIcon = response.data.condition.icon;
-  tempIconElement.innerHTML = tempIcon;
+  let tempIconElement = document.querySelector("#temp-icon-img");
+  let tempIconUrl = response.data.condition.icon_url;
+  let tempIconAlt = response.data.condition.icon;
+  tempIconElement.src = tempIconUrl;
+  tempIconElement.alt = tempIconAlt;
 
   //update temperature
   let tempValueElement = document.querySelector("#temp-value");
