@@ -57,6 +57,7 @@ function updateData(response) {
   updateTodayWeatherDescription(response);
   updateTodayHumidityAndWindSpeed(response);
   updateDateTime(response);
+  displayForecast(response);
 }
 
 function updateCityName(response) {
@@ -134,6 +135,28 @@ function updateTime(dateTime) {
   let formattedTime = `${hour}:${minute}`;
 
   timeElement.innerHTML = formattedTime;
+}
+
+function displayForecast(response) {
+  let forecastElement = document.querySelector("#forecast-section");
+  var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  days.forEach(concatenateForecast);
+
+  function concatenateForecast(day) {
+    forecastElement.innerHTML =
+      forecastElement.innerHTML +
+      `<div class="forecast-single-day">
+          <div><strong>${day}</strong></div>
+          <div class="icon">icon</div>
+          <div class="forecast-temp">
+            <strong><span class="forecast-max-temp">23</span
+            ><span class="forecast-temp-unit">°C</span></strong>
+            <span class="forecast-min-temp">14</span
+            ><span class="forecast-temp-unit">°C</span>
+          </div>
+        </div>`;
+  }
 }
 
 let submitButton = document.querySelector("#city-search-form");
