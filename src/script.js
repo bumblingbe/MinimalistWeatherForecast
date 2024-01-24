@@ -117,8 +117,44 @@ function updateTodayWeather(response) {
   updateTodayWindSpeed(response);
 }
 
-//DATE
+function updateDateTime() {
+  function updateDayOfWeek(now) {
+    let dayElement = document.querySelector("#day-of-week");
 
+    let days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+
+    let dayofWeekNumber = now.getDay();
+    let dayOfWeekWord = days[dayofWeekNumber];
+
+    dayElement.innerHTML = dayOfWeekWord;
+  }
+
+  function updateTime(now) {
+    let timeElement = document.querySelector("#time-of-day");
+
+    let hour = now.getHours();
+    let minute = now.getMinutes();
+
+    let formattedTime = `${hour}:${minute}`;
+
+    timeElement.innerHTML = formattedTime;
+  }
+
+  let now = new Date();
+
+  updateDayOfWeek(now);
+  updateTime(now);
+}
+//DATE
+updateDateTime();
 //TIME
 
 let submitButton = document.querySelector("#city-search-form");
