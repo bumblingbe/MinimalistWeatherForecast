@@ -105,11 +105,11 @@ function updateTodayHumidityAndWindSpeed(response) {
 function updateDateTime(response) {
   let dateTime = new Date(response.data.time * 1000);
 
-  updateDayOfWeek(dateTime);
+  updatedayOfWeek(dateTime);
   updateTime(dateTime);
 }
 
-function updateDayOfWeek(dateTime) {
+function updatedayOfWeek(dateTime) {
   let dayElement = document.querySelector("#day-of-week");
 
   let days = [
@@ -122,8 +122,8 @@ function updateDayOfWeek(dateTime) {
     "Saturday",
   ];
 
-  let dayofWeekNumber = dateTime.getDay();
-  let dayOfWeekWord = days[dayofWeekNumber];
+  dayOfWeekTodayNumber = dateTime.getDay();
+  let dayOfWeekWord = days[dayOfWeekTodayNumber];
 
   dayElement.innerHTML = dayOfWeekWord;
 }
@@ -141,23 +141,28 @@ function updateTime(dateTime) {
 }
 
 function displayForecast(response) {
-  console.log(response.data);
-
   let forecastElement = document.querySelector("#forecast-section");
   var days = [`Sun`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`];
+
+  var dayOfWeekNumber = "";
+  var iconUrl = "";
+  var iconDescription = "";
+  var minTemp = "";
+  var maxTemp = "";
 
   days.forEach(concatenateForecast);
 
   function concatenateForecast(day) {
+    console.log(dayOfWeekNumber);
     forecastElement.innerHTML =
       forecastElement.innerHTML +
       `<div class="forecast-single-day">
           <div><strong>${day}</strong></div>
-          <div class="icon">icon</div>
+          <div class="icon"><img src ="${iconUrl}" alt="${iconDescription}"></div>
           <div class="forecast-temp">
-            <strong><span class="forecast-max-temp">23</span
+            <strong><span class="forecast-max-temp">${maxTemp}</span
             ><span class="forecast-temp-unit">${tempUnit}</span></strong>
-            <span class="forecast-min-temp">14</span
+            <span class="forecast-min-temp">${minTemp}</span
             ><span class="forecast-temp-unit">${tempUnit}</span>
           </div>
         </div>`;
@@ -168,7 +173,6 @@ function getForecast(city) {
   let apiKey = "0bbe201oc9fead40c3t0cc4e349c3f4c";
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=${metricOrImperial}
 `;
-
   axios.get(apiUrl).then(displayForecast);
 }
 
@@ -176,6 +180,7 @@ function getForecast(city) {
 var speedUnit = "";
 var tempUnit = "";
 var metricOrImperial = "";
+var dayOfWeekTodayNumber = "";
 
 let submitButton = document.querySelector("#city-search-form");
 submitButton.addEventListener("submit", handleSearch);
