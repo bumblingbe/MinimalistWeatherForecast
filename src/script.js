@@ -17,11 +17,11 @@ function handleSearch(event) {
 //ask which units & don't accept unless answer is 'imperial' or 'metric'
 function askWhichUnits() {
   while (true) {
-    let units = prompt("Units: metric or imperial?");
-    units = units.trim().toLowerCase();
-    if (units == "metric" || units == "imperial") {
-      updateUnits(units);
-      return units;
+    metricOrImperial = prompt("Units: metric or imperial?");
+    metricOrImperial = metricOrImperial.trim().toLowerCase();
+    if (metricOrImperial == "metric" || metricOrImperial == "imperial") {
+      updateUnits(metricOrImperial);
+      return metricOrImperial;
     } else {
       alert(`Please enter either 'metric' or 'imperial'.`);
     }
@@ -35,14 +35,14 @@ function updateUnits(metricOrImperial) {
 
   //if specifies metric, update windspeed & temp units to 'km' & '°C'
   if (metricOrImperial == "metric") {
-    var speedUnit = "km/hr";
-    var tempUnit = "°C";
+    speedUnit = "km/hr";
+    tempUnit = "°C";
   }
 
   //if specifies imperial units, update windspeed & temp units to 'mi' & '°F'
   if (metricOrImperial == "imperial") {
-    var speedUnit = "mph";
-    var tempUnit = "°F";
+    speedUnit = "mph";
+    tempUnit = "°F";
   }
 
   windspeedUnitElement.innerHTML = speedUnit;
@@ -131,15 +131,20 @@ function updateDayOfWeek(dateTime) {
 function updateTime(dateTime) {
   let timeElement = document.querySelector("#time-of-day");
   let hour = dateTime.getHours();
-  let minute = dateTime.getMinutes();
+  var minute = dateTime.getMinutes();
+  if (minute < 10) {
+    minute = `0${minute}`;
+  }
   let formattedTime = `${hour}:${minute}`;
 
   timeElement.innerHTML = formattedTime;
 }
 
 function displayForecast(response) {
+  console.log(response.data);
+
   let forecastElement = document.querySelector("#forecast-section");
-  var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var days = [`Sun`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`];
 
   days.forEach(concatenateForecast);
 
@@ -151,13 +156,26 @@ function displayForecast(response) {
           <div class="icon">icon</div>
           <div class="forecast-temp">
             <strong><span class="forecast-max-temp">23</span
-            ><span class="forecast-temp-unit">°C</span></strong>
+            ><span class="forecast-temp-unit">${tempUnit}</span></strong>
             <span class="forecast-min-temp">14</span
-            ><span class="forecast-temp-unit">°C</span>
+            ><span class="forecast-temp-unit">${tempUnit}</span>
           </div>
         </div>`;
   }
 }
+
+function getForecast(city) {
+  let apiKey = "0bbe201oc9fead40c3t0cc4e349c3f4c";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=${metricOrImperial}
+`;
+
+  axios.get(apiUrl).then(displayForecast);
+}
+
+//global config
+var speedUnit = "";
+var tempUnit = "";
+var metricOrImperial = "";
 
 let submitButton = document.querySelector("#city-search-form");
 submitButton.addEventListener("submit", handleSearch);
