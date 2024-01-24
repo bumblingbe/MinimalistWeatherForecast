@@ -1,49 +1,65 @@
 function handleSearch(event) {
+  //fetch weather data
   event.preventDefault();
   let apiKey = "0bbe201oc9fead40c3t0cc4e349c3f4c";
   let citySearched = document.querySelector("#city-search-bar");
   let citySearchedValue = citySearched.value;
   let citySearchedLowerTrimmed = citySearchedValue.trim().toLowerCase();
-  let units = askWhichUnits();
+  unitsForUrl = askWhichUnits();
 
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${citySearchedLowerTrimmed}&key=${apiKey}&units=${units}`;
+  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${citySearchedLowerTrimmed}&key=${apiKey}&units=${unitsForUrl}`;
+  //fetch weather data, then direct to 'updateData' function
   axios.get(apiUrl).then(updateData);
 }
 
 function askWhichUnits() {
-  //NEED TO WORK OUT HOW TO MAKE THIS CONDITIONAL LOOP WORK???
-  let units = prompt("Units: metric or imperial?");
-  units = units.trim().toLowerCase();
-  if (units != "metric" && units != "imperial") {
-    alert(`Please enter either 'metric' or 'imperial'.`);
-    askWhichUnits();
-  } else {
-    let windspeedUnitElement = document.querySelector("#windspeed-unit");
-    let tempUnitElement = document.querySelector("#temp-unit");
-    if (units == "metric") {
-      let windspeedUnit = "km";
-      windspeedUnitElement.innerHTML = windspeedUnit;
-
-      let tempUnit = "°C";
-      tempUnitElement.innerHTML = tempUnit;
-    } else if (units == "imperial") {
-      let windspeedUnit = "mi";
-      windspeedUnitElement.innerHTML = windspeedUnit;
-
-      let tempUnit = "°F";
-      tempUnitElement.innerHTML = tempUnit;
+  //ask which units &
+  //don't continue until answer is 'imperial' or 'metric'
+  while (true) {
+    let units = prompt("Units: metric or imperial?");
+    units = units.trim().toLowerCase();
+    if (units == "metric" || units == "imperial") {
+      updateUnits(units);
+      return units;
     } else {
-      let windspeedUnit = "CHECK";
-      windspeedUnitElement.innerHTML = windspeedUnit;
-
-      let tempUnit = "CHECK";
-      tempUnitElement.innerHTML = tempUnit;
+      alert(`Please enter either 'metric' or 'imperial'.`);
     }
-    return units;
+  }
+}
+
+function updateUnits(metricOrImperial) {
+  //update windspeed & temp units to 'km' & '°C'
+  function updateMetricUnits() {
+    let windspeedUnit = "km";
+    windspeedUnitElement.innerHTML = windspeedUnit;
+    let tempUnit = "°C";
+    tempUnitElement.innerHTML = tempUnit;
+  }
+
+  function updateImperialUnits() {
+    //update windspeed & temp units to 'mi' & '°F'
+    windspeedUnitElement.innerHTML = windspeedUnit;
+    let tempUnit = "°F";
+    tempUnitElement.innerHTML = tempUnit;
+  }
+
+  //identify windspeed unit & temperature unit elements
+  var windspeedUnitElement = document.querySelector("#windspeed-unit");
+  var tempUnitElement = document.querySelector("#temp-unit");
+
+  //if specifies metric units, update to metric units
+  if (metricOrImperial == "metric") {
+    updateMetricUnits();
+  }
+
+  //if specifies imperial units, update to imperial units
+  if (metricOrImperial == "imperial") {
+    updateImperialUnits();
   }
 }
 
 function updateData(response) {
+  //feed response data into updateCityName & updateTodayWeather functions
   updateCityName(response);
   updateTodayWeather(response);
 }
@@ -100,6 +116,10 @@ function updateTodayWeather(response) {
   updateTodayHumidity(response);
   updateTodayWindSpeed(response);
 }
+
+//DATE
+
+//TIME
 
 let submitButton = document.querySelector("#city-search-form");
 submitButton.addEventListener("submit", handleSearch);
