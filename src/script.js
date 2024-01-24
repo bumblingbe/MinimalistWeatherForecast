@@ -35,19 +35,18 @@ function updateUnits(metricOrImperial) {
 
   //if specifies metric, update windspeed & temp units to 'km' & '°C'
   if (metricOrImperial == "metric") {
-    let windspeedUnit = "km";
-    windspeedUnitElement.innerHTML = windspeedUnit;
-    let tempUnit = "°C";
-    tempUnitElement.innerHTML = tempUnit;
+    var speedUnit = "km/hr";
+    var tempUnit = "°C";
   }
 
   //if specifies imperial units, update windspeed & temp units to 'mi' & '°F'
   if (metricOrImperial == "imperial") {
-    let windspeedUnit = "mi";
-    windspeedUnitElement.innerHTML = windspeedUnit;
-    let tempUnit = "°F";
-    tempUnitElement.innerHTML = tempUnit;
+    var speedUnit = "mph";
+    var tempUnit = "°F";
   }
+
+  windspeedUnitElement.innerHTML = speedUnit;
+  tempUnitElement.innerHTML = tempUnit;
 }
 
 //feed response data into updateCityName & updateTodayWeather functions
@@ -56,8 +55,7 @@ function updateData(response) {
   updateTodayWeatherIcon(response);
   updateTodayTemp(response);
   updateTodayWeatherDescription(response);
-  updateTodayHumidity(response);
-  updateTodayWindSpeed(response);
+  updateTodayHumidityAndWindSpeed(response);
   updateDateTime(response);
 }
 
@@ -92,18 +90,15 @@ function updateTodayWeatherDescription(response) {
   weatherConditionDescriptionElement.innerHTML = weatherConditionDescription;
 }
 
-// update humidity for today
-function updateTodayHumidity(response) {
-  let humidityValueElement = document.querySelector("#humidity-value");
+// update humidity and windspeed for today
+function updateTodayHumidityAndWindSpeed(response) {
+  let humidityValueUnitAndWindspeedValueElement = document.querySelector(
+    "#wind-and-humidity-info"
+  );
   let humidityValue = Math.round(response.data.temperature.humidity);
-  humidityValueElement.innerHTML = humidityValue;
-}
-
-// update wind speed for today
-function updateTodayWindSpeed(response) {
-  let windSpeedElement = document.querySelector("#windspeed-value");
-  let windSpeed = response.data.wind.speed;
-  windSpeedElement.innerHTML = windSpeed;
+  let windSpeedValue = response.data.wind.speed;
+  humidityValueUnitAndWindspeedValueElement.innerHTML = `Humidity: <strong id="humidity-value">${humidityValue}</strong>%, Wind:
+          <strong id="windspeed-value">${windSpeedValue}</strong>`;
 }
 
 function updateDateTime(response) {
