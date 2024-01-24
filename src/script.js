@@ -153,9 +153,8 @@ function updateDateTime() {
   updateDayOfWeek(now);
   updateTime(now);
 }
-//DATE
+
 updateDateTime();
-//TIME
 
 let submitButton = document.querySelector("#city-search-form");
 submitButton.addEventListener("submit", handleSearch);
