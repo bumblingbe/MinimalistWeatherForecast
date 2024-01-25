@@ -142,18 +142,41 @@ function updateTime(dateTime) {
 
 function displayForecast(response) {
   let forecastElement = document.querySelector("#forecast-section");
-  var days = [`Sun`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`];
+  var daysArray = [`Sun`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`];
+  var nextFiveDaysArray = "";
+  var i = 0;
 
-  var dayOfWeekNumber = "";
+  console.log(dayOfWeekTodayNumber);
+  console.log(nextFiveDaysArray);
+
+  function createList(dayOfWeekTodayNumber) {
+    while (i < 6) {
+      console.log(`Occurrence ${i} of loop:
+- number of days after today: ${i}`);
+
+      let nextDayIndexInDaysSequence = (dayOfWeekTodayNumber + i) % 7;
+      console.log(
+        `- index in 'days' sequence is: ${nextDayIndexInDaysSequence}`
+      );
+
+      let nextDayWordInDaysSequence = daysArray[nextDayIndexInDaysSequence];
+      console.log(`- day word is: ${nextDayWordInDaysSequence}`);
+      nextFiveDaysArray = nextFiveDaysArray + ``;
+      console.log(nextFiveDaysArray);
+      i++;
+    }
+  }
+
+  createList(dayOfWeekTodayNumber);
+
   var iconUrl = "";
   var iconDescription = "";
   var minTemp = "";
   var maxTemp = "";
 
-  days.forEach(concatenateForecast);
+  daysArray.forEach(concatenateForecast);
 
   function concatenateForecast(day) {
-    console.log(dayOfWeekNumber);
     forecastElement.innerHTML =
       forecastElement.innerHTML +
       `<div class="forecast-single-day">
