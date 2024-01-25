@@ -105,11 +105,11 @@ function updateTodayHumidityAndWindSpeed(response) {
 function updateDateTime(response) {
   let dateTime = new Date(response.data.time * 1000);
 
-  updatedayOfWeek(dateTime);
+  updateDayOfWeek(dateTime);
   updateTime(dateTime);
 }
 
-function updatedayOfWeek(dateTime) {
+function updateDayOfWeek(dateTime) {
   let dayElement = document.querySelector("#day-of-week");
 
   let days = [
@@ -123,9 +123,35 @@ function updatedayOfWeek(dateTime) {
   ];
 
   dayOfWeekTodayNumber = dateTime.getDay();
+
   let dayOfWeekWord = days[dayOfWeekTodayNumber];
 
   dayElement.innerHTML = dayOfWeekWord;
+
+  createNextXDaysArray(dayOfWeekTodayNumber);
+}
+
+function createNextXDaysArray(dayOfWeekTodayNumber) {
+  var daysArray = [`Sun`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`];
+  var i = 1;
+  var numberOfDaysForecastProvidedFor = 7;
+  while (i <= numberOfDaysForecastProvidedFor) {
+    let nextDayIndexInDaysSequence = (dayOfWeekTodayNumber + i) % 7;
+    let nextDayWordInDaysSequence = daysArray[nextDayIndexInDaysSequence];
+    console.log(`nextDayWordInDaysSequence is: ${nextDayWordInDaysSequence}
+nextXDaysArray is: ${nextXDaysArray}`);
+    nextXDaysArray.push(nextDayWordInDaysSequence);
+    console.log(`AFTER most recent push, nextXDaysArray is: ${nextXDaysArray}`);
+
+    if (i == numberOfDaysForecastProvidedFor) {
+      console.log(
+        `AFTER ${numberOfDaysForecastProvidedFor} iterations, nextXDaysArray is: ${nextXDaysArray}`
+      );
+      //nextXDaysArray.forEach(concatenateForecast);
+    }
+
+    i++;
+  }
 }
 
 function updateTime(dateTime) {
@@ -142,41 +168,12 @@ function updateTime(dateTime) {
 
 function displayForecast(response) {
   let forecastElement = document.querySelector("#forecast-section");
+}
 
-  function createNextFiveDaysArray(dayOfWeekTodayNumber) {
-    var daysArray = [`Sun`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`];
-    var i = 0;
-    while (i < 6) {
-      let nextDayIndexInDaysSequence = (dayOfWeekTodayNumber + i) % 7;
-      let nextDayWordInDaysSequence = daysArray[nextDayIndexInDaysSequence];
-      if (i == 1) {
-        nextFiveDaysArrayInner = `'${nextDayWordInDaysSequence}'`;
-      } else {
-        nextFiveDaysArrayInner =
-          nextFiveDaysArrayInner + `, '${nextDayWordInDaysSequence}'`;
-      }
-      if (i == 5) {
-        nextFiveDaysArray = [nextFiveDaysArrayInner];
-        console.log(typeof nextFiveDaysArray);
-        console.log(nextFiveDaysArray[0]);
-        nextFiveDaysArray.forEach(concatenateForecast);
-      }
-      i++;
-    }
-  }
-
-  var iconUrl = "";
-  var iconDescription = "";
-  var minTemp = "";
-  var maxTemp = "";
-  var nextFiveDaysArrayInner = "";
-
-  createNextFiveDaysArray(dayOfWeekTodayNumber);
-
-  function concatenateForecast(day) {
-    forecastElement.innerHTML =
-      forecastElement.innerHTML +
-      `<div class="forecast-single-day">
+function concatenateForecast(day) {
+  forecastElement.innerHTML =
+    forecastElement.innerHTML +
+    `<div class="forecast-single-day">
           <div><strong>${day}</strong></div>
           <div class="icon"><img src ="${iconUrl}" alt="${iconDescription}"></div>
           <div class="forecast-temp">
@@ -186,7 +183,6 @@ function displayForecast(response) {
             ><span class="forecast-temp-unit">${tempUnit}</span>
           </div>
         </div>`;
-  }
 }
 
 function getForecast(city) {
@@ -201,6 +197,11 @@ var speedUnit = "";
 var tempUnit = "";
 var metricOrImperial = "";
 var dayOfWeekTodayNumber = "";
+var iconUrl = "";
+var iconDescription = "";
+var minTemp = "";
+var maxTemp = "";
+var nextXDaysArray = [];
 
 let submitButton = document.querySelector("#city-search-form");
 submitButton.addEventListener("submit", handleSearch);
