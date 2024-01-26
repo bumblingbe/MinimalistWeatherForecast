@@ -2,14 +2,14 @@ function handleSearch(event) {
   //fetch weather data, then direct to 'updateCityTimeCurrentData' function
   event.preventDefault();
 
-  let citySearched = document.querySelector("#city-search-bar");
-  let citySearchedValue = citySearched.value;
-  let citySearchedLowerTrimmed = citySearchedValue.trim().toLowerCase();
+  citySearched = document.querySelector("#city-search-bar");
+  citySearchedValue = citySearched.value;
+  citySearchedFormatted = citySearchedValue.trim().toLowerCase();
 
   unitsForUrl = askWhichUnits();
 
-  getCityTimeCurrentData(unitsForUrl, citySearchedLowerTrimmed);
-  getForecast(unitsForUrl, citySearchedLowerTrimmed);
+  getCityTimeCurrentData(unitsForUrl, citySearchedFormatted);
+  getForecastData(unitsForUrl, citySearchedFormatted);
 }
 
 //ask which units & don't accept unless answer is 'imperial' or 'metric'
@@ -48,10 +48,10 @@ function updateUnits(metricOrImperial) {
 }
 
 //GET current data (city name & time also fetched here)
-function getCityTimeCurrentData(unitsForUrl, citySearchedLowerTrimmed) {
+function getCityTimeCurrentData(unitsForUrl, citySearchedFormatted) {
   let apiKeyCurrent = "0bbe201oc9fead40c3t0cc4e349c3f4c";
 
-  let apiUrlCurrent = `https://api.shecodes.io/weather/v1/current?query=${citySearchedLowerTrimmed}&key=${apiKeyCurrent}&units=${unitsForUrl}`;
+  let apiUrlCurrent = `https://api.shecodes.io/weather/v1/current?query=${citySearchedFormatted}&key=${apiKeyCurrent}&units=${unitsForUrl}`;
   axios.get(apiUrlCurrent).then(updateCityTimeCurrentData);
 }
 
@@ -162,9 +162,9 @@ function createNextXDaysArray(dayOfWeekTodayNumber) {
   }
 }
 
-function getForecast(unitsForUrl, citySearchedLowerTrimmed) {
+function getForecastData(unitsForUrl, citySearchedFormatted) {
   let apiKeyForecast = "0bbe201oc9fead40c3t0cc4e349c3f4c";
-  apiUrlForecast = `https://api.shecodes.io/weather/v1/forecast?query=${citySearchedLowerTrimmed}&key=${apiKeyForecast}&units=${unitsForUrl}`;
+  apiUrlForecast = `https://api.shecodes.io/weather/v1/forecast?query=${citySearchedFormatted}&key=${apiKeyForecast}&units=${unitsForUrl}`;
 
   axios.get(apiUrlForecast).then(displayForecast);
 }
@@ -212,6 +212,7 @@ var metricOrImperial = "";
 var dayOfWeekTodayNumber = "";
 var nextXDaysArray = [];
 var apiUrlForecast = "";
+var citySearchedFormatted = "";
 
 let submitButton = document.querySelector("#city-search-form");
 submitButton.addEventListener("submit", handleSearch);
