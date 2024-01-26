@@ -152,7 +152,7 @@ function updateTime(dateTime) {
 function createNextXDaysArray(dayOfWeekTodayNumber) {
   var daysArray = [`Sun`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`];
   var i = 1;
-  var numberOfDaysForecastProvidedFor = 6;
+  var numberOfDaysForecastProvidedFor = 7;
   while (i <= numberOfDaysForecastProvidedFor) {
     let nextDayIndexInDaysSequence = (dayOfWeekTodayNumber + i) % 7;
     let nextDayWordInDaysSequence = daysArray[nextDayIndexInDaysSequence];
