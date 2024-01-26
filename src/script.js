@@ -1,5 +1,5 @@
 function handleSearch(event) {
-  //fetch weather data, then direct to 'updateData' function
+  //fetch weather data, then direct to 'updateCityTimeCurrentData' function
   event.preventDefault();
 
   let citySearched = document.querySelector("#city-search-bar");
@@ -8,10 +8,8 @@ function handleSearch(event) {
 
   unitsForUrl = askWhichUnits();
 
-  let apiKey = "0bbe201oc9fead40c3t0cc4e349c3f4c";
-
-  let apiUrl = `https://api.shecodes.io/weather/v1/current?query=${citySearchedLowerTrimmed}&key=${apiKey}&units=${unitsForUrl}`;
-  axios.get(apiUrl).then(updateData);
+  getCityTimeCurrentData(unitsForUrl, citySearchedLowerTrimmed);
+  getForecast(unitsForUrl, citySearchedLowerTrimmed);
 }
 
 //ask which units & don't accept unless answer is 'imperial' or 'metric'
@@ -49,15 +47,22 @@ function updateUnits(metricOrImperial) {
   tempUnitElement.innerHTML = tempUnit;
 }
 
+//GET current data (city name & time also fetched here)
+function getCityTimeCurrentData(unitsForUrl, citySearchedLowerTrimmed) {
+  let apiKeyCurrent = "0bbe201oc9fead40c3t0cc4e349c3f4c";
+
+  let apiUrlCurrent = `https://api.shecodes.io/weather/v1/current?query=${citySearchedLowerTrimmed}&key=${apiKeyCurrent}&units=${unitsForUrl}`;
+  axios.get(apiUrlCurrent).then(updateCityTimeCurrentData);
+}
+
 //feed response data into updateCityName & updateTodayWeather functions
-function updateData(response) {
+function updateCityTimeCurrentData(response) {
   updateCityName(response);
   updateTodayWeatherIcon(response);
   updateTodayTemp(response);
   updateTodayWeatherDescription(response);
   updateTodayHumidityAndWindSpeed(response);
   updateDateTime(response);
-  displayForecast(response);
 }
 
 function updateCityName(response) {
@@ -131,29 +136,6 @@ function updateDayOfWeek(dateTime) {
   createNextXDaysArray(dayOfWeekTodayNumber);
 }
 
-function createNextXDaysArray(dayOfWeekTodayNumber) {
-  var daysArray = [`Sun`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`];
-  var i = 1;
-  var numberOfDaysForecastProvidedFor = 7;
-  while (i <= numberOfDaysForecastProvidedFor) {
-    let nextDayIndexInDaysSequence = (dayOfWeekTodayNumber + i) % 7;
-    let nextDayWordInDaysSequence = daysArray[nextDayIndexInDaysSequence];
-    console.log(`nextDayWordInDaysSequence is: ${nextDayWordInDaysSequence}
-nextXDaysArray is: ${nextXDaysArray}`);
-    nextXDaysArray.push(nextDayWordInDaysSequence);
-    console.log(`AFTER most recent push, nextXDaysArray is: ${nextXDaysArray}`);
-
-    if (i == numberOfDaysForecastProvidedFor) {
-      console.log(
-        `AFTER ${numberOfDaysForecastProvidedFor} iterations, nextXDaysArray is: ${nextXDaysArray}`
-      );
-      //nextXDaysArray.forEach(concatenateForecast);
-    }
-
-    i++;
-  }
-}
-
 function updateTime(dateTime) {
   let timeElement = document.querySelector("#time-of-day");
   let hour = dateTime.getHours();
@@ -166,14 +148,49 @@ function updateTime(dateTime) {
   timeElement.innerHTML = formattedTime;
 }
 
-function displayForecast(response) {
-  let forecastElement = document.querySelector("#forecast-section");
+//create array of the day-names for the following 5 days, in format "Ddd"
+function createNextXDaysArray(dayOfWeekTodayNumber) {
+  var daysArray = [`Sun`, `Mon`, `Tue`, `Wed`, `Thu`, `Fri`, `Sat`];
+  var i = 1;
+  var numberOfDaysForecastProvidedFor = 7;
+  while (i <= numberOfDaysForecastProvidedFor) {
+    let nextDayIndexInDaysSequence = (dayOfWeekTodayNumber + i) % 7;
+    let nextDayWordInDaysSequence = daysArray[nextDayIndexInDaysSequence];
+    nextXDaysArray.push(nextDayWordInDaysSequence);
+
+    i++;
+  }
 }
 
-function concatenateForecast(day) {
-  forecastElement.innerHTML =
-    forecastElement.innerHTML +
-    `<div class="forecast-single-day">
+function getForecast(unitsForUrl, citySearchedLowerTrimmed) {
+  let apiKeyForecast = "0bbe201oc9fead40c3t0cc4e349c3f4c";
+  apiUrlForecast = `https://api.shecodes.io/weather/v1/forecast?query=${citySearchedLowerTrimmed}&key=${apiKeyForecast}&units=${unitsForUrl}`;
+
+  axios.get(apiUrlForecast).then(displayForecast);
+}
+
+function displayForecast(response) {
+  let forecastElement = document.querySelector("#forecast-section");
+  let numberOfDaysFromToday = 1;
+
+  nextXDaysArray.forEach(concatenateForecast);
+
+  function concatenateForecast(day) {
+    let indexNumberForDailyArray = numberOfDaysFromToday - 1;
+    var iconUrl =
+      response.data.daily[indexNumberForDailyArray].condition.icon_url;
+    var iconDescription =
+      response.data.daily[indexNumberForDailyArray].condition.icon;
+    var minTemp = Math.round(
+      response.data.daily[indexNumberForDailyArray].temperature.minimum
+    );
+    var maxTemp = Math.round(
+      response.data.daily[indexNumberForDailyArray].temperature.maximum
+    );
+
+    forecastElement.innerHTML =
+      forecastElement.innerHTML +
+      `<div class="forecast-single-day">
           <div><strong>${day}</strong></div>
           <div class="icon"><img src ="${iconUrl}" alt="${iconDescription}"></div>
           <div class="forecast-temp">
@@ -183,13 +200,9 @@ function concatenateForecast(day) {
             ><span class="forecast-temp-unit">${tempUnit}</span>
           </div>
         </div>`;
-}
 
-function getForecast(city) {
-  let apiKey = "0bbe201oc9fead40c3t0cc4e349c3f4c";
-  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=${metricOrImperial}
-`;
-  axios.get(apiUrl).then(displayForecast);
+    numberOfDaysFromToday++;
+  }
 }
 
 //global config
@@ -197,11 +210,8 @@ var speedUnit = "";
 var tempUnit = "";
 var metricOrImperial = "";
 var dayOfWeekTodayNumber = "";
-var iconUrl = "";
-var iconDescription = "";
-var minTemp = "";
-var maxTemp = "";
 var nextXDaysArray = [];
+var apiUrlForecast = "";
 
 let submitButton = document.querySelector("#city-search-form");
 submitButton.addEventListener("submit", handleSearch);
